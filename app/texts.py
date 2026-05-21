@@ -1,28 +1,32 @@
-"""Все тексты сообщений собраны в одном месте — удобно редактировать."""
+"""Все тексты сообщений собраны в одном месте — удобно редактировать.
+
+Везде используется HTML parse_mode (он надёжнее Markdown — не падает на _ и * в username).
+"""
 
 from __future__ import annotations
 
+from html import escape
 from typing import Optional
 
 from .remnawave import RemnawaveUser
 
 
 WELCOME_LINKED = (
-    "👋 Привет! Вы привязаны к подписке *{username}*.\n\n"
+    "👋 Привет! Вы привязаны к подписке <b>{username}</b>.\n\n"
     "Напишите сюда любой вопрос — администратор скоро ответит."
 )
 
 WELCOME_UNLINKED = (
     "👋 Привет! Это бот поддержки.\n\n"
     "Напишите сюда любой вопрос. Если вы — клиент, "
-    "укажите ваш *username* из подписки или email, чтобы администратор быстрее вас нашёл."
+    "укажите ваш <b>username</b> из подписки или email, чтобы администратор быстрее вас нашёл."
 )
 
 OWNER_BANNER = "👤 Бот поддержки запущен. Все сообщения клиентов будут приходить сюда."
 
 OWNER_REPLY_HINT = (
-    "ℹ️ Чтобы ответить клиенту — сделайте *Reply* на форварднутое сообщение и напишите ответ.\n"
-    "Любое сообщение без reply я *не* пересылаю."
+    "ℹ️ Чтобы ответить клиенту — сделайте <b>Reply</b> на форварднутое сообщение и напишите ответ.\n"
+    "Любое сообщение без reply я <i>не</i> пересылаю."
 )
 
 DELIVERED = "✅ Ответ доставлен клиенту."
@@ -34,29 +38,36 @@ NOT_LINKED_REPLY = (
 
 
 def caption_for_owner(user: Optional[RemnawaveUser], tg_username: Optional[str], tg_id: int) -> str:
-    """Caption, который бот добавляет ОТДЕЛЬНЫМ сообщением перед форвардом клиента.
+    """HTML-caption, который бот добавляет ОТДЕЛЬНЫМ сообщением перед форвардом клиента.
 
     Сам форвард Telegram трогать не даёт (метаданные форварда фиксированы),
     поэтому контекст шлём отдельным сообщением сразу перед форвардом.
     """
-    tg_part = f"@{tg_username}" if tg_username else f"tg://user?id={tg_id}"
+    if tg_username:
+        tg_part = f"@{escape(tg_username)}"
+    else:
+        # Кликабельная ссылка на профиль клиента.
+        tg_part = f'<a href="tg://user?id={tg_id}">{tg_id}</a>'
+
     if user is None:
         return (
-            f"📩 *Новое обращение*\n"
-            f"От: {tg_part} (tg_id: `{tg_id}`)\n"
-            f"⚠️ Не привязан к подписке."
+            "📩 <b>Новое обращение</b>\n"
+            f"От: {tg_part} (tg_id: <code>{tg_id}</code>)\n"
+            "⚠️ Не привязан к подписке."
         )
+
     status_emoji = {
         "ACTIVE": "🟢",
         "DISABLED": "⛔",
         "LIMITED": "🟡",
         "EXPIRED": "🔴",
     }.get(user.status, "⚪")
+
     return (
-        f"📩 *Новое обращение*\n"
-        f"От: {tg_part} (tg_id: `{tg_id}`)\n"
-        f"Подписка: *{user.username}* {status_emoji} {user.status}\n"
-        f"Истекает: {user.expire_human}\n"
-        f"Трафик: {user.traffic_human}\n"
-        f"UUID: `{user.uuid}`"
+        "📩 <b>Новое обращение</b>\n"
+        f"От: {tg_part} (tg_id: <code>{tg_id}</code>)\n"
+        f"Подписка: <b>{escape(user.username)}</b> {status_emoji} {escape(user.status)}\n"
+        f"Истекает: {escape(user.expire_human)}\n"
+        f"Трафик: {escape(user.traffic_human)}\n"
+        f"UUID: <code>{escape(user.uuid)}</code>"
     )

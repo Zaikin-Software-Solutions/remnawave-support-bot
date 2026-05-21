@@ -31,7 +31,8 @@ async def main() -> None:
 
     bot = Bot(
         token=settings.bot_token,
-        default=DefaultBotProperties(parse_mode=None),
+        # HTML по умолчанию: безопаснее Markdown — устойчив к _ и * в username и user-input.
+        default=DefaultBotProperties(parse_mode="HTML"),
     )
     dp = Dispatcher()
     dp.include_router(build_root_router())

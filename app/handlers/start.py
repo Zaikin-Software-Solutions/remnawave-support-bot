@@ -55,9 +55,7 @@ async def cmd_start(
     if linked_username is None:
         # Просто запоминаем факт обращения, без привязки.
         await db.upsert_user(tg_user_id=tg_id, tg_username=tg_username)
-        await message.answer(WELCOME_UNLINKED, parse_mode="Markdown")
+        await message.answer(WELCOME_UNLINKED)
     else:
-        await message.answer(
-            WELCOME_LINKED.format(username=linked_username),
-            parse_mode="Markdown",
-        )
+        from html import escape
+        await message.answer(WELCOME_LINKED.format(username=escape(linked_username)))

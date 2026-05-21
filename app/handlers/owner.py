@@ -48,4 +48,4 @@ async def owner_without_reply(message: Message) -> None:
     # Игнорим команды (например /start), их обработают свои handlers.
     if message.text and message.text.startswith("/"):
         return
-    await message.answer(OWNER_REPLY_HINT, parse_mode="Markdown")
+    await message.answer(OWNER_REPLY_HINT)

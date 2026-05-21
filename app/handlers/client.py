@@ -32,7 +32,7 @@ async def relay_to_owner(
         # Владелец — его сообщения обрабатывает owner.py. Сюда попадёт, только если
         # владелец что-то написал без reply — тогда подскажем, как пользоваться.
         from ..texts import OWNER_REPLY_HINT
-        await message.answer(OWNER_REPLY_HINT, parse_mode="Markdown")
+        await message.answer(OWNER_REPLY_HINT)
         return
 
     tg_id = message.from_user.id
@@ -51,7 +51,6 @@ async def relay_to_owner(
     caption_msg = await bot.send_message(
         chat_id=settings.owner_tg_id,
         text=caption_for_owner(rw_user, tg_username, tg_id),
-        parse_mode="Markdown",
     )
 
     # 3. Форвардим оригинал клиента владельцу. Именно на ЭТО сообщение владелец
