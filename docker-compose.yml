@@ -1,0 +1,18 @@
+services:
+  support-bot:
+    build: .
+    image: remnawave-support-bot:latest
+    container_name: remnawave-support-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data
+    # Если нужно ходить в Remnawave API во внутренней docker-сети панели —
+    # раскомментируйте и подставьте имя сети из docker-compose Remnawave.
+    # networks:
+    #   - remnawave
+
+# networks:
+#   remnawave:
+#     external: true
