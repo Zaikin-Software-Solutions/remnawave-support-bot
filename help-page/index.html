@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Поддержка · zspzvs</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --card: #161b22;
+    --border: #232a33;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --tg: #229ed9;
+    --tg-soft: #1a87b9;
+    --vk: #4a76a8;
+    --vk-soft: #3d6390;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --muted: #57606a;
+      --shadow: 0 8px 24px rgba(140,149,159,.2);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    width: 100%;
+    max-width: 520px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .channels {
+    display: grid;
+    gap: 12px;
+  }
+  a.channel {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: transform .08s ease, border-color .15s ease;
+  }
+  a.channel:hover { transform: translateY(-1px); border-color: var(--accent); }
+  a.channel:active { transform: translateY(0); }
+  .icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .icon.tg { background: linear-gradient(135deg, var(--tg), var(--tg-soft)); }
+  .icon.vk { background: linear-gradient(135deg, var(--vk), var(--vk-soft)); }
+  .channel .body { flex: 1; min-width: 0; }
+  .channel .title-row {
+    display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  }
+  .channel h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .channel .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .channel .tag.primary { color: var(--accent); border-color: var(--accent); }
+  .channel p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .channel .link {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--accent);
+    word-break: break-all;
+  }
+  footer {
+    text-align: center;
+    margin-top: 28px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Поддержка zspzvs</h1>
+    <p>Выберите удобный канал связи. Если один не работает — попробуйте следующий.</p>
+  </header>
+
+  <div class="channels">
+
+    <a class="channel" href="https://t.me/zspzvs_support_bot" target="_blank" rel="noopener">
+      <div class="icon tg">TG</div>
+      <div class="body">
+        <div class="title-row">
+          <h2>Бот поддержки</h2>
+          <span class="tag primary">основной</span>
+        </div>
+        <p>Личный диалог с администратором. Пишите сюда, если что-то не работает, нужна помощь с подключением или вопросы по подписке.</p>
+        <div class="link">t.me/zspzvs_support_bot</div>
+      </div>
+    </a>
+
+    <a class="channel" href="https://t.me/zspzvs_channel" target="_blank" rel="noopener">
+      <div class="icon tg">TG</div>
+      <div class="body">
+        <div class="title-row">
+          <h2>Канал с анонсами</h2>
+          <span class="tag">новости</span>
+        </div>
+        <p>Статус серверов, переезды узлов, инструкции и гайды в закрепе. Подпишитесь, чтобы вовремя узнавать о технических работах.</p>
+        <div class="link">t.me/zspzvs_channel</div>
+      </div>
+    </a>
+
+    <a class="channel" href="https://vk.me/aicserrock" target="_blank" rel="noopener">
+      <div class="icon vk">VK</div>
+      <div class="body">
+        <div class="title-row">
+          <h2>Резерв: ВК</h2>
+          <span class="tag">если TG лежит</span>
+        </div>
+        <p>Личные сообщения администратору во ВКонтакте. Используйте, если Telegram заблокирован или недоступен.</p>
+        <div class="link">vk.me/aicserrock</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    Не делитесь ссылкой на подписку с другими — это снижает скорость и может привести к блокировке.
+  </footer>
+</main>
+</body>
+</html>
