@@ -41,7 +41,7 @@ app/
 ```
 /newbot
 <имя бота, например: Z-VPN Support>
-<username бота, например: zspzvs_support_bot>
+<username бота, например: myvpn_support_bot>
 ```
 
 BotFather пришлёт токен вида `123456789:AAH...` — это `BOT_TOKEN`.
@@ -90,8 +90,12 @@ docker compose logs -f support-bot
 В админке Remnawave **Subscription Settings → Sub Page Configs** (или эквивалент в вашей версии) добавить в правый верхний угол ссылки:
 
 - **Поддержка (TG):** `https://t.me/<bot_username>?start=sub_{{shortUuid}}` — `{{shortUuid}}` подставляется панелью автоматически (имя плейсхолдера зависит от темы шаблона).
-- **Анонсы (TG):** `https://t.me/<channel_username>`
-- **Резерв (VK):** `https://vk.me/aicserrock`
+- **Анонсы (TG):** `https://t.me/<channel_username>` (опционально)
+- **Резерв (VK / другой мессенджер):** на случай блокировки Telegram (опционально)
+
+## Help-page
+
+`help-page/index.html` — статичная страница «Поддержка», на которую можно ссылаться из subscription-страницы Remnawave (кнопка «Поддержка»). Это **шаблон**: внутри плейсхолдеры `your_brand`, `your_support_bot`, `your_channel`, `your_vk_username` — замените на свои перед заливкой страницы на хостинг. Сам бот её не отдаёт; разместите как обычный static-файл (nginx, Cloudflare Pages, GitHub Pages и т.п.).
 
 ## Что хранится в БД
 

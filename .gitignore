@@ -13,3 +13,11 @@ data/
 *.db-shm
 *.db-wal
 .DS_Store
+
+# Python build artifacts
+*.egg-info/
+build/
+dist/
+
+# Local-only secrets (anything matching is ignored, e.g. .3x-ui-creds.local)
+*.local
