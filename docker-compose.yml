@@ -1,7 +1,9 @@
+# Production compose: pulls the prebuilt multi-arch image from GHCR.
+# For local development with rebuild-on-change, use:
+#   docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
 services:
   support-bot:
-    build: .
-    image: remnawave-support-bot:latest
+    image: ghcr.io/zaikin-software-solutions/remnawave-support-bot:latest
     container_name: remnawave-support-bot
     restart: unless-stopped
     env_file:

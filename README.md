@@ -1,5 +1,10 @@
 # remnawave-support-bot
 
+[![CI](https://github.com/Zaikin-Software-Solutions/remnawave-support-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/Zaikin-Software-Solutions/remnawave-support-bot/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Zaikin-Software-Solutions/remnawave-support-bot?display_name=tag&sort=semver&cacheSeconds=300)](https://github.com/Zaikin-Software-Solutions/remnawave-support-bot/releases)
+[![Docker image](https://img.shields.io/badge/ghcr.io-remnawave--support--bot-blue?logo=docker&logoColor=white)](https://github.com/Zaikin-Software-Solutions/remnawave-support-bot/pkgs/container/remnawave-support-bot)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+
 Telegram-бот поддержки для Remnawave-панели.
 
 ## Что делает
@@ -58,19 +63,43 @@ BotFather пришлёт токен вида `123456789:AAH...` — это `BOT_
 
 ### 4. Развернуть бот
 
-На VPS:
+#### Вариант A — из готового образа GHCR (рекомендуется)
+
+CI каждый push в `main` и каждый тег `vX.Y.Z` собирает multi-arch образ
+(`linux/amd64` + `linux/arm64`) и публикует в
+`ghcr.io/zaikin-software-solutions/remnawave-support-bot`. Никакой компиляции на сервере не нужно.
 
 ```bash
-# Если ещё нет docker compose plugin:
-# apt install docker-compose-plugin
-
 mkdir -p /opt/remnawave-support-bot && cd /opt/remnawave-support-bot
-# (скопировать сюда все файлы из этого репо — scp/git clone/rsync)
 
+# Подтянуть compose и env-шаблон из репо.
+curl -sSL https://raw.githubusercontent.com/Zaikin-Software-Solutions/remnawave-support-bot/main/docker-compose.yml -o docker-compose.yml
+curl -sSL https://raw.githubusercontent.com/Zaikin-Software-Solutions/remnawave-support-bot/main/.env.example -o .env
+
+# Заполнить BOT_TOKEN, OWNER_TG_ID, REMNAWAVE_BASE_URL, REMNAWAVE_API_TOKEN.
+$EDITOR .env
+
+# Папка под SQLite-базу. docker-compose монтирует ./data:/data.
+mkdir -p data
+
+docker compose pull
+docker compose up -d
+docker compose logs -f support-bot
+```
+
+Чтобы зафиксировать версию — замените `:latest` в `docker-compose.yml` на
+`:1.0.0` (или `:1` / `:1.0` — floating major / minor). Обновление:
+`docker compose pull && docker compose up -d`.
+
+#### Вариант B — сборка из исходников (для локальной разработки)
+
+```bash
+git clone https://github.com/Zaikin-Software-Solutions/remnawave-support-bot.git
+cd remnawave-support-bot
 cp .env.example .env
-nano .env   # заполнить BOT_TOKEN, OWNER_TG_ID, REMNAWAVE_BASE_URL, REMNAWAVE_API_TOKEN
-
-docker compose up -d --build
+$EDITOR .env
+mkdir -p data
+docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
 docker compose logs -f support-bot
 ```
 
